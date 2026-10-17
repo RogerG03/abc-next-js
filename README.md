@@ -1,0 +1,112 @@
+# ABC · Next.js Modular Starter
+
+> Una plantilla de Next.js pensada para iniciar productos mantenibles: pequeña al principio, modular cuando el producto crece y preparada para colaborar con personas y agentes de IA.
+
+[![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-149eca?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-private-lightgrey)](#)
+
+## ¿Qué resuelve?
+
+ABC evita dos extremos comunes: una app con todo mezclado en `components/`, `services/` y `utils/`, o una arquitectura demasiado pesada desde el primer commit. Organiza el producto por capacidades de negocio y sólo incorpora nuevas capas cuando una funcionalidad las necesita.
+
+Es una buena base para:
+
+- Productos SaaS, paneles internos y aplicaciones web que crecerán por módulos.
+- Equipos que combinan componentes propios y librerías de UI.
+- Proyectos que podrán vivir en una app, un monorepo o varios repositorios coordinados.
+- Equipos que trabajan con agentes de IA y necesitan reglas de estructura verificables.
+
+## Stack tecnológico
+
+| Tecnología                                                             | Uso en la plantilla                                             |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [Next.js 16](https://nextjs.org/)                                      | Framework full-stack, App Router y optimización de producción.  |
+| [React 19](https://react.dev/)                                         | Interfaz de usuario y Server/Client Components.                 |
+| [TypeScript](https://www.typescriptlang.org/)                          | Tipado estricto y contratos claros.                             |
+| [Turbopack](https://nextjs.org/docs/app/api-reference/turbopack) + SWC | Bundling y transpilación rápidos, incluidos por Next.js.        |
+| ESLint                                                                 | Calidad de código y reglas de Next.js.                          |
+| Prettier                                                               | Formato consistente para código, configuración y documentación. |
+| GitHub Actions                                                         | Verificación automática en cada pull request y push a `main`.   |
+
+## Arquitectura
+
+```mermaid
+flowchart LR
+  App[app\nRutas y composición] --> Modules[modules\nCapacidades de negocio]
+  App --> Shared[shared\nPiezas transversales]
+  App --> Server[server\nInfraestructura privada]
+  Modules --> Shared
+  Server --> Domain[modules/*/domain\nContratos]
+```
+
+```text
+src/
+├─ app/                    # Rutas, layouts, metadata y handlers de Next.js
+├─ modules/                # Capacidades: projects/, auth/, billing/, etc.
+│  └─ <modulo>/
+│     ├─ ui/               # UI exclusiva del módulo
+│     ├─ application/      # Casos de uso, sólo si existen
+│     ├─ domain/           # Reglas y contratos, sólo si existen
+│     ├─ data/             # DTOs/mappers/queries, sólo si existen
+│     ├─ hooks/            # Hooks propios, sólo si existen
+│     └─ schemas/          # Validación, sólo si existe
+├─ shared/                 # UI y utilidades sin vocabulario de negocio
+└─ server/                 # DB, auth e integraciones privadas cuando se requieran
+```
+
+`app/` conoce las URLs; un módulo conoce una capacidad del producto; `shared/` no conoce el negocio; `server/` conserva secretos y adaptadores privados. Las carpetas son permitidas, no obligatorias: no se crean directorios vacíos ni capas “por si acaso”.
+
+La guía ampliada está en [docs/architecture.md](docs/architecture.md).
+
+## Inicio rápido
+
+```bash
+git clone https://github.com/RogerG03/abc-next-js.git
+cd abc-next-js
+npm install
+npm run dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Comando                | Descripción                                 |
+| ---------------------- | ------------------------------------------- |
+| `npm run dev`          | Inicia el entorno local con Turbopack.      |
+| `npm run lint`         | Ejecuta ESLint.                             |
+| `npm run typecheck`    | Ejecuta TypeScript sin emitir archivos.     |
+| `npm run format`       | Aplica formato con Prettier.                |
+| `npm run format:check` | Verifica el formato sin modificar archivos. |
+| `npm run build`        | Genera el build optimizado de producción.   |
+| `npm run start`        | Sirve el build de producción.               |
+
+## Convenciones para personas y agentes
+
+La plantilla incluye la skill local [`next-modular-architecture`](.codex/skills/next-modular-architecture/SKILL.md) y un [`AGENTS.md`](AGENTS.md). Antes de tocar la estructura, cualquier agente debe leerlas.
+
+Estas reglas impiden crear carpetas genéricas como `src/components`, `src/services`, `src/utils` o `src/features`. También definen:
+
+- Nombres para archivos, componentes, hooks, tipos, DTOs y esquemas.
+- Límites de importación entre `app`, `modules`, `shared` y `server`.
+- Ubicación de imágenes, iconos y fuentes.
+- Criterios para crecer a monorepo o coordinar varias apps desde un repositorio orquestador.
+
+## Cuando haya varios repositorios
+
+Cada aplicación conserva esta arquitectura y puede instalarse, probarse y desplegarse por sí sola. El repositorio orquestador conserva ADRs, contratos API versionados, composición local y CI reutilizable; no absorbe el código de las aplicaciones.
+
+El código compartido se publica como paquetes versionados —por ejemplo `@organizacion/ui` y `@organizacion/contracts`— o se comparte mediante contratos API. No se usan imports relativos entre repositorios, copias manuales ni submódulos Git como dependencias de producción.
+
+## Calidad continua
+
+El workflow de GitHub Actions ejecuta en cada pull request:
+
+```text
+format:check → lint → typecheck → build
+```
+
+Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado y compilación.
+
