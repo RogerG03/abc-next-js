@@ -7,7 +7,7 @@ export function HomeScreen() {
         <p className="eyebrow">ABC · Next.js template</p>
         <h1 id="page-title">Una base modular lista para crecer.</h1>
         <p className="description">
-          Las rutas viven en <code>app</code>, las capacidades de producto en <code>modules</code>y
+          Las rutas viven en <code>app</code>, las capacidades de producto en <code>modules</code> y
           las piezas transversales en <code>shared</code>.
         </p>
         <div className="cards">
