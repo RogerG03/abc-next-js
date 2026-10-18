@@ -1,6 +1,6 @@
 # Optional GitHub Actions workflow.
 # This starter does not run CI until you uncomment this file.
-# When enabled, it checks formatting, lint, types, unit tests, E2E and build.
+# When enabled, it checks Oxfmt, Oxlint, types, unit tests, Knip, E2E and build.
 #
 # name: CI
 #
@@ -26,6 +26,7 @@
 #       - run: pnpm lint
 #       - run: pnpm typecheck
 #       - run: pnpm test
+#       - run: pnpm knip
 #       - run: pnpm exec playwright install --with-deps chromium
 #       - run: pnpm test:e2e
 #       - run: pnpm build

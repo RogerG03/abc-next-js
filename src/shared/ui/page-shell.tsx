@@ -5,5 +5,5 @@ type PageShellProps = {
 };
 
 export function PageShell({ children }: PageShellProps) {
-  return <main className="page-shell">{children}</main>;
+  return <main className="mx-auto w-[min(100%-2rem,72rem)] py-20">{children}</main>;
 }

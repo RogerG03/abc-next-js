@@ -20,15 +20,18 @@ Es una buena base para:
 
 ## Stack tecnológico
 
-| Tecnología                                                             | Uso en la plantilla                                             |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [Next.js 16](https://nextjs.org/)                                      | Framework full-stack, App Router y optimización de producción.  |
-| [React 19](https://react.dev/)                                         | Interfaz de usuario y Server/Client Components.                 |
-| [TypeScript](https://www.typescriptlang.org/)                          | Tipado estricto y contratos claros.                             |
-| [Turbopack](https://nextjs.org/docs/app/api-reference/turbopack) + SWC | Bundling y transpilación rápidos, incluidos por Next.js.        |
-| ESLint                                                                 | Calidad de código y reglas de Next.js.                          |
-| Prettier                                                               | Formato consistente para código, configuración y documentación. |
-| GitHub Actions                                                         | Verificación automática en cada pull request y push a `main`.   |
+| Tecnología                                                             | Uso en la plantilla                                                                   |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Next.js 16](https://nextjs.org/)                                      | Framework full-stack, App Router y optimización de producción.                        |
+| [React 19](https://react.dev/)                                         | Interfaz de usuario y Server/Client Components.                                       |
+| [TypeScript](https://www.typescriptlang.org/)                          | Tipado estricto y contratos claros.                                                   |
+| [Turbopack](https://nextjs.org/docs/app/api-reference/turbopack) + SWC | Bundling y transpilación rápidos, incluidos por Next.js.                              |
+| [Oxlint](https://oxc.rs/docs/guide/usage/linter/quickstart.html)       | Lint rápido para JavaScript/TypeScript; TypeScript conserva la comprobación de tipos. |
+| [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)                | Formato consistente, incluido el orden de clases de Tailwind.                         |
+| [Tailwind CSS v4](https://tailwindcss.com/)                            | Estilos con utilidades estáticas junto al componente.                                 |
+| [tailwind-variants](https://www.tailwind-variants.org/)                | Variantes semánticas y seguras para componentes reutilizables.                        |
+| [Knip](https://knip.dev/)                                              | Reporte de dependencias, exports y archivos potencialmente sin uso.                   |
+| GitHub Actions                                                         | Verificación automática en cada pull request y push a `main`.                         |
 
 ## Runtime de Node.js
 
@@ -84,7 +87,7 @@ La plantilla no obliga a conservar capas sin uso. Elimina una pieza sólo junto 
 | Husky                                                         | Quieres bloquear commits locales que no pasen calidad                      | Instala Husky y activa `.husky/pre-commit.example`; no se instala ni ejecuta por defecto.                                         |
 | `.codex/skills/` y `AGENTS.md`                                | Colaboran agentes o quieres hacer cumplir la arquitectura                  | Trabaja un equipo que no usará agentes ni estas reglas; perderás sus límites documentados.                                        |
 
-No elimines `src/app/`, `src/shared/`, TypeScript, ESLint, Prettier ni la configuración de Node: son el núcleo mínimo de la plantilla.
+No elimines `src/app/`, `src/shared/`, TypeScript, Oxc, Tailwind ni la configuración de Node: son el núcleo mínimo de la plantilla.
 
 ## Inicio rápido
 
@@ -102,22 +105,24 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Comando             | Descripción                                  |
-| ------------------- | -------------------------------------------- |
-| `pnpm dev`          | Inicia el entorno local con Turbopack.       |
-| `pnpm lint`         | Ejecuta ESLint.                              |
-| `pnpm typecheck`    | Ejecuta TypeScript sin emitir archivos.      |
-| `pnpm test`         | Ejecuta pruebas unitarias y de componentes.  |
-| `pnpm test:watch`   | Ejecuta las pruebas unitarias en modo watch. |
-| `pnpm test:e2e`     | Ejecuta el flujo E2E en Chromium.            |
-| `pnpm format`       | Aplica formato con Prettier.                 |
-| `pnpm format:check` | Verifica el formato sin modificar archivos.  |
-| `pnpm build`        | Genera el build optimizado de producción.    |
-| `pnpm start`        | Sirve el build de producción.                |
+| Comando             | Descripción                                                    |
+| ------------------- | -------------------------------------------------------------- |
+| `pnpm dev`          | Inicia el entorno local con Turbopack.                         |
+| `pnpm lint`         | Ejecuta Oxlint y falla ante advertencias.                      |
+| `pnpm lint:fix`     | Aplica correcciones seguras de Oxlint.                         |
+| `pnpm typecheck`    | Ejecuta TypeScript sin emitir archivos.                        |
+| `pnpm test`         | Ejecuta pruebas unitarias y de componentes.                    |
+| `pnpm test:watch`   | Ejecuta las pruebas unitarias en modo watch.                   |
+| `pnpm test:e2e`     | Ejecuta el flujo E2E en Chromium.                              |
+| `pnpm format`       | Aplica formato con Oxfmt.                                      |
+| `pnpm format:check` | Verifica el formato con Oxfmt sin modificar archivos.          |
+| `pnpm knip`         | Reporta código o dependencias sin uso; revisa antes de borrar. |
+| `pnpm build`        | Genera el build optimizado de producción.                      |
+| `pnpm start`        | Sirve el build de producción.                                  |
 
 ## Convenciones para personas y agentes
 
-La plantilla incluye la skill local [`next-modular-architecture`](.codex/skills/next-modular-architecture/SKILL.md) y un [`AGENTS.md`](AGENTS.md). Antes de tocar la estructura, cualquier agente debe leerlas.
+La plantilla incluye las skills locales [`next-modular-architecture`](.codex/skills/next-modular-architecture/SKILL.md) y [`tailwind-component-creation`](.codex/skills/tailwind-component-creation/SKILL.md), además de un [`AGENTS.md`](AGENTS.md). Antes de tocar la estructura o crear UI, cualquier agente debe leer la que corresponda.
 
 Estas reglas impiden crear carpetas genéricas como `src/components`, `src/services`, `src/utils` o `src/features`. También definen:
 
@@ -125,6 +130,12 @@ Estas reglas impiden crear carpetas genéricas como `src/components`, `src/servi
 - Límites de importación entre `app`, `modules`, `shared` y `server`.
 - Ubicación de imágenes, iconos y fuentes.
 - Criterios para crecer a monorepo o coordinar varias apps desde un repositorio orquestador.
+
+## Componentes y estilos
+
+Tailwind CSS v4 se carga desde `src/app/globals.css` y se procesa con PostCSS. Las clases permanecen junto a cada componente; no se crean hojas de estilos por componente ni carpetas globales nuevas. Para una variante semántica y estable —por ejemplo, `intent`, `size` o `tone`— se usa `tailwind-variants` con `tv` en el nivel del módulo. La skill local indica cuándo una pieza pertenece a `modules/<modulo>/ui` y cuándo ha madurado lo suficiente para `shared/ui`.
+
+Evita componer nombres de clase dinámicamente (`bg-${color}-500`): Tailwind necesita ver las clases completas en el código fuente. `pnpm format` ordena las clases de Tailwind automáticamente mediante Oxfmt.
 
 ## Cuando haya varios repositorios
 
@@ -137,7 +148,7 @@ El código compartido se publica como paquetes versionados —por ejemplo `@orga
 GitHub Actions viene como receta **comentada** en `.github/workflows/ci.yml`; no se ejecuta hasta que la descomentes. Al activarla, ejecuta en cada pull request:
 
 ```text
-format:check → lint → typecheck → test → test:e2e → build
+format:check → lint → typecheck → test → knip → test:e2e → build
 ```
 
 Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; Playwright usa Chromium y arranca Next automáticamente.

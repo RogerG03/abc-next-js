@@ -2,6 +2,8 @@
 
 Antes de crear, mover o reorganizar código, lee `.codex/skills/next-modular-architecture/SKILL.md` y la referencia que enlaza.
 
+Antes de crear o modificar un componente, lee también `.codex/skills/tailwind-component-creation/SKILL.md`.
+
 - Respeta primero las convenciones existentes del repositorio.
 - Mantén las rutas de Next en `src/app`, el producto en `src/modules` y el código transversal en `src/shared`.
 - No crees carpetas genéricas como `src/components`, `src/services`, `src/utils`, `src/features` o `src/store`; la skill indica los únicos destinos permitidos y cuándo crearlos.
@@ -10,6 +12,9 @@ Antes de crear, mover o reorganizar código, lee `.codex/skills/next-modular-arc
 - No hagas refactors masivos sólo para uniformar nombres.
 - Coloca pruebas unitarias o de componente junto al archivo que cubren como `<archivo>.test.tsx`; reserva `tests/e2e` para recorridos de navegador.
 - Usa `pnpm`; no generes ni modifiques `package-lock.json`.
+- Usa Oxfmt y Oxlint mediante los scripts de `package.json`; conserva `pnpm typecheck` porque Oxc no sustituye la comprobación de tipos de TypeScript.
+- Usa `tailwind-variants` sólo para variantes semánticas y estables. No construyas clases Tailwind dinámicamente ni agregues `tailwind-merge`.
+- Ejecuta `pnpm knip` como informe de mantenimiento; sus hallazgos se revisan antes de eliminar código o dependencias.
 - Ejecuta los chequeos relevantes antes de finalizar un cambio y comunica los que no hayan podido ejecutarse.
 
 <!-- BEGIN:nextjs-agent-rules -->
