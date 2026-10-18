@@ -80,6 +80,8 @@ La plantilla no obliga a conservar capas sin uso. Elimina una pieza sólo junto 
 | `src/server/`                                                 | Hay DB, autenticación, secretos o integración privada                      | La app no tiene infraestructura de servidor propia.                                                                               |
 | `tests/e2e/` + Playwright                                     | Hay flujos críticos de navegador, rutas, cookies o Server Components async | Es un prototipo sin flujo de navegador que proteger. Quita también `playwright.config.ts`, `test:e2e`, dependencia y pasos de CI. |
 | Vitest y pruebas junto a fuente                               | Quieres feedback rápido de lógica o componentes                            | Sólo en un experimento desechable. Quita `vitest.config.mts`, `vitest.setup.ts`, tests, scripts, dependencias y CI relacionados.  |
+| GitHub Actions                                                | Quieres validar cada push o pull request en remoto                         | El workflow está comentado por defecto; descomenta `.github/workflows/ci.yml` para activarlo.                                     |
+| Husky                                                         | Quieres bloquear commits locales que no pasen calidad                      | Instala Husky y activa `.husky/pre-commit.example`; no se instala ni ejecuta por defecto.                                         |
 | `.codex/skills/` y `AGENTS.md`                                | Colaboran agentes o quieres hacer cumplir la arquitectura                  | Trabaja un equipo que no usará agentes ni estas reglas; perderás sus límites documentados.                                        |
 
 No elimines `src/app/`, `src/shared/`, TypeScript, ESLint, Prettier ni la configuración de Node: son el núcleo mínimo de la plantilla.
@@ -132,7 +134,7 @@ El código compartido se publica como paquetes versionados —por ejemplo `@orga
 
 ## Calidad continua
 
-El workflow de GitHub Actions ejecuta en cada pull request:
+GitHub Actions viene como receta **comentada** en `.github/workflows/ci.yml`; no se ejecuta hasta que la descomentes. Al activarla, ejecuta en cada pull request:
 
 ```text
 format:check → lint → typecheck → test → test:e2e → build
@@ -141,3 +143,5 @@ format:check → lint → typecheck → test → test:e2e → build
 Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; Playwright usa Chromium y arranca Next automáticamente.
 
 Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado, pruebas y compilación.
+
+Husky también es opcional. Para activarlo, instala `husky`, ejecuta `npx husky init`, sustituye el hook generado por `.husky/pre-commit.example` y descomenta los checks que quieras aplicar antes de cada commit.
