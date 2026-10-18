@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABC · Antes y después del flujo shift-left</title>
+    <meta
+      name="description"
+      content="Comparativa de la plantilla ABC antes y después de incorporar calidad shift-left."
+    />
+    <style>
+      :root {
+        --ink: #0f172a;
+        --muted: #475569;
+        --line: #e2e8f0;
+        --bg: #f8fafc;
+        --card: #fff;
+        --before: #b91c1c;
+        --before-bg: #fef2f2;
+        --after: #047857;
+        --after-bg: #ecfdf5;
+        --accent: #2563eb;
+        color-scheme: light;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          16px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      main {
+        width: min(100% - 2rem, 72rem);
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+      a {
+        color: var(--accent);
+      }
+      .eyebrow {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 0.4rem 0 0.8rem;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+      h2 {
+        margin: 3rem 0 1rem;
+        font-size: 1.5rem;
+      }
+      .lead {
+        max-width: 62ch;
+        color: var(--muted);
+        font-size: 1.1rem;
+      }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .kpi {
+        padding: 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--card);
+      }
+      .kpi p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .kpi strong {
+        display: block;
+        margin-top: 0.3rem;
+        font-size: 1.9rem;
+        font-variant-numeric: tabular-nums;
+      }
+      .kpi .from {
+        color: var(--before);
+      }
+      .kpi .to {
+        color: var(--after);
+      }
+      .flows {
+        display: grid;
+        gap: 1rem;
+      }
+      .flow {
+        padding: 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--card);
+      }
+      .flow h3 {
+        margin: 0 0 0.8rem;
+        font-size: 1rem;
+      }
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .steps li {
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        border: 1px solid var(--line);
+      }
+      .steps li + li::before {
+        content: "→";
+        margin-right: 0.5rem;
+        color: var(--muted);
+      }
+      .off {
+        background: var(--before-bg);
+        color: var(--before);
+        text-decoration: line-through;
+      }
+      .on {
+        background: var(--after-bg);
+        color: var(--after);
+        font-weight: 600;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--card);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 44rem;
+      }
+      caption {
+        padding: 1rem;
+        text-align: left;
+        color: var(--muted);
+      }
+      th,
+      td {
+        padding: 0.85rem 1rem;
+        border-top: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      thead th {
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      td.before {
+        background: var(--before-bg);
+      }
+      td.after {
+        background: var(--after-bg);
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.875em;
+      }
+      footer {
+        margin-top: 3rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">ABC · Next.js template</p>
+      <h1>Antes y después del flujo shift-left</h1>
+      <p class="lead">
+        Antes, los estándares estaban escritos pero nada los hacía cumplir. Ahora cada developer
+        ejecuta en su máquina la misma barrera que CI, y CI sólo confirma.
+      </p>
+
+      <section class="kpis" aria-label="Indicadores">
+        <div class="kpi">
+          <p>Controles automáticos antes de CI</p>
+          <strong><span class="from">0</span> → <span class="to">11</span></strong>
+        </div>
+        <div class="kpi">
+          <p>Jobs de CI activos</p>
+          <strong><span class="from">0</span> → <span class="to">3 + Pages</span></strong>
+        </div>
+        <div class="kpi">
+          <p>Límites de arquitectura verificados</p>
+          <strong><span class="from">0</span> → <span class="to">3</span></strong>
+        </div>
+        <div class="kpi">
+          <p>Comandos para validar un cambio</p>
+          <strong><span class="from">7</span> → <span class="to">1</span></strong>
+        </div>
+      </section>
+
+      <h2>Recorrido de un cambio</h2>
+      <div class="flows">
+        <article class="flow">
+          <h3>Antes</h3>
+          <ol class="steps">
+            <li>Editor</li>
+            <li class="off">Hook pre-commit (ejemplo sin instalar)</li>
+            <li class="off">Convención de commits</li>
+            <li class="off">Checks antes de push</li>
+            <li>Pull request</li>
+            <li class="off">CI (comentado)</li>
+            <li>main</li>
+          </ol>
+        </article>
+        <article class="flow">
+          <h3>Ahora</h3>
+          <ol class="steps">
+            <li class="on">pnpm install: Node 24.20.0 + hooks</li>
+            <li>Editor</li>
+            <li class="on">pre-commit: formato, lint, secretos</li>
+            <li class="on">commit-msg: Conventional Commits</li>
+            <li class="on">pre-push: pnpm check</li>
+            <li class="on">PR con Definition of Done</li>
+            <li class="on">CI: check, build + E2E, seguridad</li>
+            <li>main → Pages</li>
+          </ol>
+        </article>
+      </div>
+
+      <h2>Comparativa por área</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>
+            Cada fila indica dónde se detecta ahora el problema: cuanto más a la izquierda del
+            recorrido, más barato es corregirlo.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Área</th>
+              <th scope="col">Antes</th>
+              <th scope="col">Ahora</th>
+              <th scope="col">Se detecta en</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Runtime de Node</th>
+              <td class="before">
+                <code>.nvmrc</code> y <code>engines</code> sin verificar; Node 24.16 pasaba sin
+                aviso.
+              </td>
+              <td class="after">
+                <code>devEngines.runtime</code> descarga Node 24.20.0 y lo fija en el lockfile.
+              </td>
+              <td>Instalación</td>
+            </tr>
+            <tr>
+              <th scope="row">Cadena de suministro</th>
+              <td class="before">Se instalaba cualquier versión al publicarse; sin auditoría.</td>
+              <td class="after">
+                <code>minimumReleaseAge</code> de 24 h, <code>engineStrict</code>,
+                <code>pnpm audit</code>, dependency review y Dependabot.
+              </td>
+              <td>Instalación y CI</td>
+            </tr>
+            <tr>
+              <th scope="row">Hooks de Git</th>
+              <td class="before">
+                <code>.husky/pre-commit.example</code> comentado y Husky sin instalar.
+              </td>
+              <td class="after">
+                Lefthook se instala con <code>pnpm install</code>: <code>pre-commit</code>,
+                <code>commit-msg</code>, <code>pre-push</code>.
+              </td>
+              <td>Commit y push</td>
+            </tr>
+            <tr>
+              <th scope="row">Formato y lint</th>
+              <td class="before">Manual; Oxlint sólo con la categoría por defecto.</td>
+              <td class="after">
+                Sobre archivos staged al hacer commit; <code>correctness</code> +
+                <code>suspicious</code> como errores.
+              </td>
+              <td>Commit</td>
+            </tr>
+            <tr>
+              <th scope="row">Arquitectura</th>
+              <td class="before">
+                Límites sólo descritos en la skill y en <code>AGENTS.md</code>.
+              </td>
+              <td class="after">
+                <code>no-restricted-imports</code> bloquea <code>shared → modules/app/server</code>,
+                <code>modules → app</code> e imports internos entre módulos.
+              </td>
+              <td>Editor y commit</td>
+            </tr>
+            <tr>
+              <th scope="row">Secretos</th>
+              <td class="before">Sin escaneo.</td>
+              <td class="after">
+                gitleaks en <code>pre-commit</code> (opcional) y en CI sobre todo el historial
+                (obligatorio).
+              </td>
+              <td>Commit y CI</td>
+            </tr>
+            <tr>
+              <th scope="row">Commits</th>
+              <td class="before">Convención implícita en el historial.</td>
+              <td class="after">Conventional Commits verificados en <code>commit-msg</code>.</td>
+              <td>Commit</td>
+            </tr>
+            <tr>
+              <th scope="row">Tipos</th>
+              <td class="before">
+                <code>tsc</code> dependía de un <code>next-env.d.ts</code> versionado e ignorado a
+                la vez.
+              </td>
+              <td class="after">
+                <code>next typegen &amp;&amp; tsc --noEmit</code>; archivo generado fuera de Git.
+              </td>
+              <td>Push</td>
+            </tr>
+            <tr>
+              <th scope="row">Fuente de verdad</th>
+              <td class="before">Siete comandos repetidos en README, guía, hook y CI.</td>
+              <td class="after">
+                Un script, <code>pnpm check</code>, usado por <code>pre-push</code> y por CI.
+              </td>
+              <td>Push</td>
+            </tr>
+            <tr>
+              <th scope="row">E2E</th>
+              <td class="before">Contra <code>next dev</code>, también en CI.</td>
+              <td class="after">
+                En CI contra el build de producción, con <code>forbidOnly</code>, reintento y
+                reporte.
+              </td>
+              <td>CI</td>
+            </tr>
+            <tr>
+              <th scope="row">CI</th>
+              <td class="before">Workflow comentado.</td>
+              <td class="after">
+                Tres jobs paralelos, permisos mínimos, cancelación de ejecuciones obsoletas, Node
+                desde <code>.nvmrc</code>.
+              </td>
+              <td>CI</td>
+            </tr>
+            <tr>
+              <th scope="row">Saltos de línea</th>
+              <td class="before">Sin <code>.gitattributes</code>; avisos CRLF en Windows.</td>
+              <td class="after"><code>* text=auto eol=lf</code>.</td>
+              <td>Checkout</td>
+            </tr>
+            <tr>
+              <th scope="row">Pull requests</th>
+              <td class="before">Sin plantilla.</td>
+              <td class="after">Checklist de Definition of Done.</td>
+              <td>PR</td>
+            </tr>
+            <tr>
+              <th scope="row">Cabeceras HTTP</th>
+              <td class="before"><code>X-Powered-By: Next.js</code> expuesta.</td>
+              <td class="after"><code>poweredByHeader: false</code>.</td>
+              <td>Build</td>
+            </tr>
+            <tr>
+              <th scope="row">Documentación</th>
+              <td class="before">Markdown dentro del repositorio.</td>
+              <td class="after">
+                Sitio en GitHub Pages con auditoría, guía shift-left y esta comparativa.
+              </td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer>
+        <a href="./">Inicio</a> · <a href="audit.html">Auditoría</a> ·
+        <a href="shift-left.html">Flujo shift-left</a> ·
+        <a href="https://github.com/RogerG03/abc-next-js">Repositorio</a>
+      </footer>
+    </main>
+  </body>
+</html>

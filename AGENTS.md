@@ -17,6 +17,9 @@ Si la tarea consiste en iniciar un producto a partir de ABC o decidir una librer
 - Usa Oxfmt y Oxlint mediante los scripts de `package.json`; conserva `pnpm typecheck` porque Oxc no sustituye la comprobación de tipos de TypeScript.
 - Usa `tailwind-variants` sólo para variantes semánticas y estables. No construyas clases Tailwind dinámicamente ni agregues `tailwind-merge`.
 - Ejecuta `pnpm knip` como informe de mantenimiento; sus hallazgos se revisan antes de eliminar código o dependencias.
+- `pnpm check` es la definición de "listo": lo ejecutan el hook `pre-push` y CI. Añade un control nuevo como script dentro de `check`, no como paso suelto en CI. Ver `docs/shift-left.md`.
+- No uses `git commit --no-verify` ni desactives reglas de Oxlint para pasar un hook; corrige la causa.
+- Los commits siguen Conventional Commits (`tipo(alcance): resumen`); el hook `commit-msg` lo verifica.
 - Ejecuta los chequeos relevantes antes de finalizar un cambio y comunica los que no hayan podido ejecutarse.
 
 <!-- BEGIN:nextjs-agent-rules -->
