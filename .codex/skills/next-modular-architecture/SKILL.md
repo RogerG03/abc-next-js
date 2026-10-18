@@ -180,4 +180,3 @@ El repositorio orquestador no contiene ni construye las fuentes de las apps. Cad
 - ¿Se ejecutaron format, lint, typecheck y las pruebas/build relevantes, o se explicó qué impidió hacerlo?
 
 La referencia en `references/conventions.md` contiene ejemplos cortos; este archivo es la fuente de verdad para las decisiones de estructura.
-

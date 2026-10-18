@@ -27,4 +27,3 @@ No uses `components`, `services`, `utils` o `types` globales para esconder códi
 `app → modules/shared/server`, `modules → propio/shared/API pública`, `shared → shared`, `server → contratos/shared`.
 
 Para varios repositorios: el orquestador conserva ADRs, contratos, composición local y CI; no contiene fuentes de las apps. Cada app se construye y despliega sola. Comparte paquetes publicados versionados (`@organizacion/ui`, `@organizacion/contracts`) o contratos API versionados, nunca imports relativos entre repositorios ni submódulos como dependencia normal.
-

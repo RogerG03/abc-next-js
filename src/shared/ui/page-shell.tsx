@@ -7,4 +7,3 @@ type PageShellProps = {
 export function PageShell({ children }: PageShellProps) {
   return <main className="page-shell">{children}</main>;
 }
-
