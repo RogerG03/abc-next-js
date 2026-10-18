@@ -1,3 +1,12 @@
+---
+eyebrow: "Guía · calidad"
+description: "Cada control se mueve al punto más temprano y barato donde puede ejecutarse. Un único comando, pnpm check, define “listo”."
+meta:
+  - "8 etapas"
+  - "3 hooks de Git"
+  - "3 jobs de CI"
+---
+
 # Flujo shift-left
 
 _Shift-left_ significa mover cada control al punto más temprano y barato donde puede ejecutarse. En ABC el principio es concreto: **un único comando, `pnpm check`, define "listo"**, y se ejecuta igual en la máquina del developer y en CI. Un PR rojo en CI indica que se saltó un paso local, no que CI encontró algo que el developer no podía ver.

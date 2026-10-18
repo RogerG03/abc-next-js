@@ -1,3 +1,8 @@
+---
+eyebrow: "Guía · adopción"
+description: "Cómo crear un repositorio de producto a partir de ABC y qué hacer en sus primeros 15 minutos."
+---
+
 # Usar ABC como plantilla de proyecto
 
 ABC es una **referencia de inicio**, no el repositorio de tus aplicaciones. No subas producto, clientes, secretos ni funcionalidades reales a `RogerG03/abc-next-js`. Cada producto nace en su propio repositorio y toma estas reglas como punto de partida.

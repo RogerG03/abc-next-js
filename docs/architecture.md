@@ -1,3 +1,8 @@
+---
+eyebrow: "Referencia · arquitectura"
+description: "Límites entre app, modules, shared y server, y cómo escalar a varios repositorios."
+---
+
 # Arquitectura de ABC
 
 ## Límites
