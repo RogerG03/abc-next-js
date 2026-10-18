@@ -1,0 +1,209 @@
+---
+title: ABC · Next.js Modular Starter
+description: Plantilla Next.js donde cada developer cumple los estándares internos antes de llegar a CI/CD.
+landing: true
+---
+
+<section class="hero" aria-labelledby="titulo">
+  <div class="wrap">
+    <p class="eyebrow reveal">Plantilla Next.js 16 · calidad shift-left</p>
+    <h1 id="titulo" class="reveal reveal-2">Los errores se detienen en tu máquina, no en CI.</h1>
+    <p class="lead reveal reveal-3">
+      Los mismos comandos corren en el editor, en los hooks de Git y en GitHub Actions. CI confirma
+      lo que ya pasó en local; no descubre problemas nuevos.
+    </p>
+    <div class="actions reveal reveal-4">
+      <a class="btn btn-primary" href="comparison.html"
+        >Ver antes y después <span class="arrow" aria-hidden="true">→</span></a
+      >
+      <a class="btn btn-ghost" href="audit.html">Leer la auditoría</a>
+    </div>
+
+    <div class="kpis reveal reveal-4" role="list" aria-label="Indicadores antes y después">
+      <div class="kpi" role="listitem">
+        <p class="kpi-label">Controles automáticos antes de CI</p>
+        <div class="kpi-value">
+          <span class="kpi-from">0</span><span class="kpi-arrow" aria-hidden="true">→</span
+          ><span class="kpi-to">11</span>
+        </div>
+      </div>
+      <div class="kpi" role="listitem">
+        <p class="kpi-label">Jobs de CI activos</p>
+        <div class="kpi-value">
+          <span class="kpi-from">0</span><span class="kpi-arrow" aria-hidden="true">→</span
+          ><span class="kpi-to">3 <small>+ Pages</small></span>
+        </div>
+      </div>
+      <div class="kpi" role="listitem">
+        <p class="kpi-label">Límites de arquitectura verificados</p>
+        <div class="kpi-value">
+          <span class="kpi-from">0</span><span class="kpi-arrow" aria-hidden="true">→</span
+          ><span class="kpi-to">3</span>
+        </div>
+      </div>
+      <div class="kpi" role="listitem">
+        <p class="kpi-label">Comandos para validar un cambio</p>
+        <div class="kpi-value">
+          <span class="kpi-from">7</span><span class="kpi-arrow" aria-hidden="true">→</span
+          ><span class="kpi-to">1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="recorrido">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Recorrido de un cambio</p>
+      <h2 id="recorrido">Cada control, en el punto más barato donde puede ejecutarse</h2>
+      <p>
+        El color indica el coste de descubrir un error en esa etapa: verde en segundos y en tu
+        editor, rojo cuando ya hay un PR abierto esperando a CI.
+      </p>
+    </div>
+
+    <ol class="pipeline">
+      <li class="stage s0">
+        <span class="stage-dot">0</span><span class="stage-name">Instalación</span
+        ><span class="stage-what">Node 24.20.0, dependencias con 24 h, hooks</span
+        ><span class="stage-cost">una vez</span>
+      </li>
+      <li class="stage s1">
+        <span class="stage-dot">1</span><span class="stage-name">Editor</span
+        ><span class="stage-what">Formato, lint y tipos al guardar</span
+        ><span class="stage-cost">instantáneo</span>
+      </li>
+      <li class="stage s2">
+        <span class="stage-dot">2</span><span class="stage-name">pre-commit</span
+        ><span class="stage-what">Staged: formato, lint, secretos</span
+        ><span class="stage-cost">&lt; 2 s</span>
+      </li>
+      <li class="stage s3">
+        <span class="stage-dot">3</span><span class="stage-name">commit-msg</span
+        ><span class="stage-what">Conventional Commits</span
+        ><span class="stage-cost">instantáneo</span>
+      </li>
+      <li class="stage s4">
+        <span class="stage-dot">4</span><span class="stage-name">pre-push</span
+        ><span class="stage-what"><code>pnpm check</code> completo</span
+        ><span class="stage-cost">~10–20 s</span>
+      </li>
+      <li class="stage s5">
+        <span class="stage-dot">5</span><span class="stage-name">Pull request</span
+        ><span class="stage-what">Definition of Done</span><span class="stage-cost">—</span>
+      </li>
+      <li class="stage s6">
+        <span class="stage-dot">6</span><span class="stage-name">CI</span
+        ><span class="stage-what">Check, build + E2E, seguridad</span
+        ><span class="stage-cost">2–4 min</span>
+      </li>
+      <li class="stage s7">
+        <span class="stage-dot">7</span><span class="stage-name">Mantenimiento</span
+        ><span class="stage-what">Dependabot semanal</span><span class="stage-cost">—</span>
+      </li>
+    </ol>
+    <div class="pipeline-note" aria-hidden="true">
+      <span class="bracket">La mayoría de los errores se detiene aquí</span>
+      <span class="bracket-late">Red de seguridad</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="docs">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Documentación</p>
+      <h2 id="docs">Qué cambió, por qué y cómo usarlo</h2>
+    </div>
+
+    <div class="bento">
+      <a class="doc-card is-featured" href="comparison.html">
+        <span class="tag">Comparativa</span>
+        <h3>Antes y después del flujo shift-left</h3>
+        <p>
+          Quince áreas, de Node a las cabeceras HTTP, con el punto exacto del recorrido donde ahora
+          se detecta cada problema.
+        </p>
+        <div class="mini-compare">
+          <div class="was">
+            <b>Antes</b>CI comentado, Husky sin instalar, límites de arquitectura sólo en Markdown.
+          </div>
+          <div class="now">
+            <b>Ahora</b>Un <code>pnpm check</code> en <code>pre-push</code> y en CI, hooks
+            instalados con <code>pnpm install</code>.
+          </div>
+        </div>
+        <span class="go">Abrir la comparativa <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="doc-card" href="audit.html">
+        <span class="tag">Auditoría</span>
+        <div class="stat">15<small>hallazgos</small></div>
+        <p>Severidad, acción aplicada, valoración de cada librería y mejoras pospuestas.</p>
+        <span class="go">Leer <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="doc-card" href="shift-left.html">
+        <span class="tag">Guía</span>
+        <h3>Flujo shift-left</h3>
+        <p>Qué se valida en cada etapa y qué ajustes activar en GitHub.</p>
+        <span class="go">Leer <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="doc-card" href="using-this-template.html">
+        <span class="tag">Adopción</span>
+        <h3>Usar ABC como plantilla</h3>
+        <p>Crear un repositorio de producto y sus primeros 15 minutos.</p>
+        <span class="go">Leer <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="doc-card" href="architecture.html">
+        <span class="tag">Referencia</span>
+        <h3>Arquitectura</h3>
+        <p>
+          Límites entre <code>app</code>, <code>modules</code>, <code>shared</code> y
+          <code>server</code>.
+        </p>
+        <span class="go">Leer <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="doc-card" href="{{ site.repository_url }}">
+        <span class="tag">Código</span>
+        <h3>Repositorio</h3>
+        <p>Plantilla, workflows de CI y configuración de Lefthook.</p>
+        <span class="go">Abrir en GitHub <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="arranque">
+  <div class="wrap split">
+    <div class="section-head">
+      <p class="kicker">Arranque</p>
+      <h2 id="arranque">Tres comandos y los estándares ya están activos</h2>
+      <ul class="checklist">
+        <li>pnpm descarga Node 24.20.0 si hace falta y lo fija en el lockfile.</li>
+        <li><code>pnpm install</code> instala los hooks de Git con Lefthook.</li>
+        <li>
+          Antes de abrir un PR, <code>pnpm check</code> debe pasar; el hook <code>pre-push</code> lo
+          ejecuta solo.
+        </li>
+      </ul>
+    </div>
+    <div class="terminal" role="figure" aria-label="Comandos de arranque">
+      <div class="terminal-bar" aria-hidden="true">
+        <i></i><i></i><i></i><span>abc-next-js</span>
+      </div>
+      <pre><code><span class="p">$</span> git clone {{ site.repository_url }}.git
+<span class="p">$</span> cd abc-next-js
+<span class="p">$</span> pnpm install   <span class="c"># Node 24.20.0 + hooks de Git</span>
+<span class="p">$</span> pnpm dev
+
+<span class="c"># antes de push (lo ejecuta el hook)</span>
+<span class="p">$</span> pnpm check
+<span class="ok">✓</span> format:check  <span class="ok">✓</span> lint  <span class="ok">✓</span> typecheck  <span class="ok">✓</span> test  <span class="ok">✓</span> knip</code></pre>
+    </div>
+  </div>
+</section>

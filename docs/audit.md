@@ -1,6 +1,13 @@
-# Auditoría de la plantilla
+---
+eyebrow: "Auditoría · octubre de 2026"
+description: "Herramientas, configuración, flujo de calidad y documentación de ABC evaluados con un criterio: ¿puede un developer cumplir todos los estándares antes de llegar a CI/CD?"
+meta:
+  - "15 hallazgos"
+  - "13 librerías valoradas"
+  - "8 mejoras pospuestas"
+---
 
-Fecha: octubre de 2026. Alcance: herramientas, configuración, flujo de calidad y documentación de ABC como punto de partida para productos Next.js, evaluados con criterio _shift-left_: ¿puede un developer cumplir todos los estándares antes de llegar a CI/CD?
+# Auditoría de la plantilla
 
 ## Resumen
 

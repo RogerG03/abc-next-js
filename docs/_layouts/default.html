@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'es' }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% if page.url == "/" %}
+    <title>{{ site.title }}</title>
+    {% else %}
+    <title>{{ page.title }} · {{ site.title }}</title>
+    {% endif %}
+    <meta name="description" content="{{ page.description | default: site.description }}" />
+    <meta name="theme-color" content="#0d1014" />
+    <meta property="og:title" content="{{ page.title | default: site.title }}" />
+    <meta property="og:description" content="{{ page.description | default: site.description }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop offset='0' stop-color='%2312b886'/%3E%3Cstop offset='1' stop-color='%23e8590c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="{{ '/' | relative_url }}">
+          <span class="brand-mark" aria-hidden="true">ABC</span>
+          <span>ABC <small>· Next.js Modular Starter</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Documentación">
+          {% for item in site.nav %}
+          <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}aria-current="page"{% endif %}>{{ item.title }}</a>
+          {% endfor %}
+          <a class="nav-repo" href="{{ site.repository_url }}">GitHub ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    {% if page.landing %}
+    <main id="contenido">{{ content }}</main>
+    {% else %}
+    <section class="hero" aria-labelledby="titulo">
+      <div class="wrap">
+        <p class="eyebrow">{{ page.eyebrow | default: "Documentación" }}</p>
+        <h1 id="titulo">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="lead">{{ page.description }}</p>
+        {% endif %} {% if page.meta %}
+        <div class="hero-meta">{% for m in page.meta %}<span>{{ m }}</span>{% endfor %}</div>
+        {% endif %}
+      </div>
+    </section>
+
+    <div class="wrap doc-layout">
+      <nav class="toc" aria-label="En esta página" hidden>
+        <p>En esta página</p>
+        <ol></ol>
+      </nav>
+      <main id="contenido" class="prose">{{ content }}</main>
+    </div>
+    {% endif %}
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>{{ site.title }} · plantilla de referencia, no repositorio de producto.</span>
+        <nav aria-label="Pie">
+          {% for item in site.nav %}<a href="{{ item.url | relative_url }}">{{ item.title }}</a>{% endfor %}
+          <a href="{{ site.repository_url }}">Repositorio</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      // Mejora progresiva: índice lateral, tablas desplazables y etiquetas de severidad.
+      (() => {
+        const prose = document.querySelector(".prose");
+        if (!prose) return;
+
+        prose.querySelectorAll(":scope > table").forEach((table) => {
+          const wrap = document.createElement("div");
+          wrap.className = "table-scroll";
+          table.replaceWith(wrap);
+          wrap.append(table);
+        });
+
+        const pills = {
+          alta: "high",
+          media: "mid",
+          baja: "low",
+          info: "info",
+          mantener: "keep",
+          añadir: "add",
+          retirar: "remove",
+        };
+        prose.querySelectorAll("td").forEach((cell) => {
+          const kind = pills[cell.textContent.trim().toLowerCase()];
+          if (!kind || cell.children.length) return;
+          const pill = document.createElement("span");
+          pill.className = `pill pill-${kind}`;
+          pill.textContent = cell.textContent.trim();
+          cell.replaceChildren(pill);
+        });
+
+        const toc = document.querySelector(".toc");
+        const headings = [...prose.querySelectorAll("h2[id]")];
+        if (!toc || headings.length < 2) return;
+        const list = toc.querySelector("ol");
+        const links = headings.map((h) => {
+          const a = document.createElement("a");
+          a.href = `#${h.id}`;
+          a.textContent = h.textContent;
+          const li = document.createElement("li");
+          li.append(a);
+          list.append(li);
+          return a;
+        });
+        toc.hidden = false;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const index = headings.indexOf(entry.target);
+              links.forEach((link, i) => link.classList.toggle("is-active", i === index));
+            });
+          },
+          { rootMargin: "-20% 0px -70% 0px" },
+        );
+        headings.forEach((h) => observer.observe(h));
+      })();
+    </script>
+  </body>
+</html>

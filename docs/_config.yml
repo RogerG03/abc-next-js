@@ -1,3 +1,27 @@
 title: "ABC · Next.js Modular Starter"
 description: "Plantilla Next.js con calidad shift-left: cada developer valida en local lo mismo que CI."
 lang: es
+repository_url: "https://github.com/RogerG03/abc-next-js"
+
+# El título de cada página sale de su primer encabezado y se muestra en el héroe del layout.
+titles_from_headings:
+  enabled: true
+  strip_title: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+nav:
+  - title: Comparativa
+    url: /comparison.html
+  - title: Auditoría
+    url: /audit.html
+  - title: Shift-left
+    url: /shift-left.html
+  - title: Plantilla
+    url: /using-this-template.html
+  - title: Arquitectura
+    url: /architecture.html

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": [".next", "coverage", "playwright-report", "test-results"],
+  "ignorePatterns": [".next", "coverage", "playwright-report", "test-results", "docs/_layouts"],
   "printWidth": 100,
   "sortTailwindcss": true
 }

@@ -7,7 +7,7 @@ pre-commit:
   jobs:
     - name: format
       glob: "*.{js,jsx,ts,tsx,mjs,mts,cjs,json,css,md,yml,yaml,html}"
-      run: pnpm exec oxfmt {staged_files}
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
     - name: lint
       glob: "*.{js,jsx,ts,tsx,mjs,mts,cjs}"
