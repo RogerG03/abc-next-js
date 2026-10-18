@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 # Optional Husky hook. It does nothing until Husky is installed and these commands are uncommented.
 #
-# 1. npm install --save-dev husky
-# 2. npx husky init
+# 1. pnpm add --save-dev husky
+# 2. pnpm exec husky init
 # 3. Replace .husky/pre-commit with this file and uncomment the checks below.
 #
-# npm run format:check
-# npm run lint
-# npm run typecheck
-# npm run test
+# pnpm format:check
+# pnpm lint
+# pnpm typecheck
+# pnpm test

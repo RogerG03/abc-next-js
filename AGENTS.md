@@ -9,6 +9,7 @@ Antes de crear, mover o reorganizar código, lee `.codex/skills/next-modular-arc
 - No importes desde `src/server` en componentes cliente ni hagas imports internos de otro módulo.
 - No hagas refactors masivos sólo para uniformar nombres.
 - Coloca pruebas unitarias o de componente junto al archivo que cubren como `<archivo>.test.tsx`; reserva `tests/e2e` para recorridos de navegador.
+- Usa `pnpm`; no generes ni modifiques `package-lock.json`.
 - Ejecuta los chequeos relevantes antes de finalizar un cambio y comunica los que no hayan podido ejecutarse.
 
 <!-- BEGIN:nextjs-agent-rules -->

@@ -92,28 +92,28 @@ No elimines `src/app/`, `src/shared/`, TypeScript, ESLint, Prettier ni la config
 git clone https://github.com/RogerG03/abc-next-js.git
 cd abc-next-js
 nvm use
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-Si no usas `nvm`, instala Node.js 24 LTS y comprueba `node --version` antes de ejecutar `npm install`.
+Instala pnpm 12.14.0 una vez con `npm install --global pnpm@12.14.0`. Si no usas `nvm`, instala Node.js 24 LTS y comprueba `node --version` antes de ejecutar `pnpm install`.
 
 Abre [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Comando                | Descripción                                  |
-| ---------------------- | -------------------------------------------- |
-| `npm run dev`          | Inicia el entorno local con Turbopack.       |
-| `npm run lint`         | Ejecuta ESLint.                              |
-| `npm run typecheck`    | Ejecuta TypeScript sin emitir archivos.      |
-| `npm run test`         | Ejecuta pruebas unitarias y de componentes.  |
-| `npm run test:watch`   | Ejecuta las pruebas unitarias en modo watch. |
-| `npm run test:e2e`     | Ejecuta el flujo E2E en Chromium.            |
-| `npm run format`       | Aplica formato con Prettier.                 |
-| `npm run format:check` | Verifica el formato sin modificar archivos.  |
-| `npm run build`        | Genera el build optimizado de producción.    |
-| `npm run start`        | Sirve el build de producción.                |
+| Comando             | Descripción                                  |
+| ------------------- | -------------------------------------------- |
+| `pnpm dev`          | Inicia el entorno local con Turbopack.       |
+| `pnpm lint`         | Ejecuta ESLint.                              |
+| `pnpm typecheck`    | Ejecuta TypeScript sin emitir archivos.      |
+| `pnpm test`         | Ejecuta pruebas unitarias y de componentes.  |
+| `pnpm test:watch`   | Ejecuta las pruebas unitarias en modo watch. |
+| `pnpm test:e2e`     | Ejecuta el flujo E2E en Chromium.            |
+| `pnpm format`       | Aplica formato con Prettier.                 |
+| `pnpm format:check` | Verifica el formato sin modificar archivos.  |
+| `pnpm build`        | Genera el build optimizado de producción.    |
+| `pnpm start`        | Sirve el build de producción.                |
 
 ## Convenciones para personas y agentes
 
@@ -144,4 +144,4 @@ Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E vive
 
 Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado, pruebas y compilación.
 
-Husky también es opcional. Para activarlo, instala `husky`, ejecuta `npx husky init`, sustituye el hook generado por `.husky/pre-commit.example` y descomenta los checks que quieras aplicar antes de cada commit.
+Husky también es opcional. Para activarlo, instala `husky` con pnpm, ejecuta `pnpm exec husky init`, sustituye el hook generado por `.husky/pre-commit.example` y descomenta los checks que quieras aplicar antes de cada commit.
