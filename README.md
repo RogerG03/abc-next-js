@@ -30,6 +30,10 @@ Es una buena base para:
 | Prettier                                                               | Formato consistente para código, configuración y documentación. |
 | GitHub Actions                                                         | Verificación automática en cada pull request y push a `main`.   |
 
+## Runtime de Node.js
+
+La plantilla usa **Node.js 24.22.0 LTS**. Es la línea estable fijada para desarrollo y CI; evita adoptar la rama "Current" antes de que madure. `.nvmrc`, `package.json` y GitHub Actions mantienen la misma versión.
+
 ## Arquitectura
 
 ```mermaid
@@ -65,9 +69,12 @@ La guía ampliada está en [docs/architecture.md](docs/architecture.md).
 ```bash
 git clone https://github.com/RogerG03/abc-next-js.git
 cd abc-next-js
+nvm use
 npm install
 npm run dev
 ```
+
+Si no usas `nvm`, instala Node.js 24 LTS y comprueba `node --version` antes de ejecutar `npm install`.
 
 Abre [http://localhost:3000](http://localhost:3000).
 
