@@ -103,6 +103,10 @@ Instala pnpm 12.14.0 una vez con `npm install --global pnpm@12.14.0`. Si no usas
 
 Abre [http://localhost:3000](http://localhost:3000).
 
+## Usar ABC como referencia
+
+Este repositorio no recibe aplicaciones reales: sirve para generar repositorios nuevos que conservan sus reglas y arranque técnico. La guía [Usar ABC como plantilla de proyecto](docs/using-this-template.md) explica el primer arranque, el prompt para agentes, la separación con `code-memory`, los opcionales y cuándo extraer una futura librería de componentes desde Figma.
+
 ## Scripts
 
 | Comando             | Descripción                                                    |

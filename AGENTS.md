@@ -4,6 +4,8 @@ Antes de crear, mover o reorganizar código, lee `.codex/skills/next-modular-arc
 
 Antes de crear o modificar un componente, lee también `.codex/skills/tailwind-component-creation/SKILL.md`.
 
+Si la tarea consiste en iniciar un producto a partir de ABC o decidir una librería de componentes, lee `docs/using-this-template.md`.
+
 - Respeta primero las convenciones existentes del repositorio.
 - Mantén las rutas de Next en `src/app`, el producto en `src/modules` y el código transversal en `src/shared`.
 - No crees carpetas genéricas como `src/components`, `src/services`, `src/utils`, `src/features` o `src/store`; la skill indica los únicos destinos permitidos y cuándo crearlos.
