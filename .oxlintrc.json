@@ -1,5 +1,54 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "react", "nextjs", "vitest", "jsx-a11y"],
-  "ignorePatterns": [".next", "coverage", "playwright-report", "test-results"]
+  "plugins": ["typescript", "react", "nextjs", "vitest", "jsx-a11y", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "rules": {
+    "import/no-unassigned-import": [
+      "error",
+      { "allow": ["./globals.css", "@testing-library/jest-dom/vitest"] }
+    ],
+    "react/react-in-jsx-scope": "off"
+  },
+  "ignorePatterns": [".next", "coverage", "playwright-report", "test-results"],
+  "overrides": [
+    {
+      "files": ["src/shared/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["@/app/**", "@/modules/**", "@/server/**"],
+                "message": "shared/ no conoce rutas, módulos ni infraestructura."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/modules/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["@/app/**"],
+                "message": "Un módulo no importa rutas."
+              },
+              {
+                "group": ["@/modules/*/**"],
+                "message": "Usa imports relativos dentro del módulo y @/modules/<modulo> (index.ts) entre módulos."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
