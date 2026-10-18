@@ -32,7 +32,7 @@ Es una buena base para:
 
 ## Runtime de Node.js
 
-La plantilla usa **Node.js 24.22.0 LTS**. Es la línea estable fijada para desarrollo y CI; evita adoptar la rama "Current" antes de que madure. `.nvmrc`, `package.json` y GitHub Actions mantienen la misma versión.
+La plantilla usa **Node.js 24.20.0 LTS**. Es la línea estable fijada para desarrollo y CI; evita adoptar la rama "Current" antes de que madure. `.nvmrc`, `package.json` y GitHub Actions mantienen la misma versión.
 
 ## Arquitectura
 
@@ -80,15 +80,18 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Comando                | Descripción                                 |
-| ---------------------- | ------------------------------------------- |
-| `npm run dev`          | Inicia el entorno local con Turbopack.      |
-| `npm run lint`         | Ejecuta ESLint.                             |
-| `npm run typecheck`    | Ejecuta TypeScript sin emitir archivos.     |
-| `npm run format`       | Aplica formato con Prettier.                |
-| `npm run format:check` | Verifica el formato sin modificar archivos. |
-| `npm run build`        | Genera el build optimizado de producción.   |
-| `npm run start`        | Sirve el build de producción.               |
+| Comando                | Descripción                                  |
+| ---------------------- | -------------------------------------------- |
+| `npm run dev`          | Inicia el entorno local con Turbopack.       |
+| `npm run lint`         | Ejecuta ESLint.                              |
+| `npm run typecheck`    | Ejecuta TypeScript sin emitir archivos.      |
+| `npm run test`         | Ejecuta pruebas unitarias y de componentes.  |
+| `npm run test:watch`   | Ejecuta las pruebas unitarias en modo watch. |
+| `npm run test:e2e`     | Ejecuta el flujo E2E en Chromium.            |
+| `npm run format`       | Aplica formato con Prettier.                 |
+| `npm run format:check` | Verifica el formato sin modificar archivos.  |
+| `npm run build`        | Genera el build optimizado de producción.    |
+| `npm run start`        | Sirve el build de producción.                |
 
 ## Convenciones para personas y agentes
 
@@ -112,8 +115,9 @@ El código compartido se publica como paquetes versionados —por ejemplo `@orga
 El workflow de GitHub Actions ejecuta en cada pull request:
 
 ```text
-format:check → lint → typecheck → build
+format:check → lint → typecheck → test → test:e2e → build
 ```
 
-Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado y compilación.
+Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; Playwright usa Chromium y arranca Next automáticamente.
 
+Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado, pruebas y compilación.
