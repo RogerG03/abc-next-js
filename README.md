@@ -37,12 +37,18 @@ La plantilla usa **Node.js 24.20.0 LTS**. Es la línea estable fijada para desar
 ## Arquitectura
 
 ```mermaid
-flowchart LR
-  App[app\nRutas y composición] --> Modules[modules\nCapacidades de negocio]
-  App --> Shared[shared\nPiezas transversales]
-  App --> Server[server\nInfraestructura privada]
-  Modules --> Shared
-  Server --> Domain[modules/*/domain\nContratos]
+flowchart TB
+  Route[app\nURL, layout, metadata] --> Screen[modules/*/ui\nPantalla o componente del producto]
+  Screen --> Shared[shared\nUI y utilidades sin negocio]
+  Screen --> UseCase[modules/*/application\nSólo si hay caso de uso]
+  UseCase --> Domain[modules/*/domain\nReglas y contratos]
+  Route -. sólo servidor .-> Server[server\nDB, auth e integraciones]
+  Server --> Domain
+
+  Change[Cambio] --> Checks[format + lint + typecheck]
+  Checks --> Unit[Vitest\npruebas junto al código]
+  Unit --> E2E[Playwright\ntests/e2e]
+  E2E --> Build[Build de producción]
 ```
 
 ```text
@@ -63,6 +69,20 @@ src/
 `app/` conoce las URLs; un módulo conoce una capacidad del producto; `shared/` no conoce el negocio; `server/` conserva secretos y adaptadores privados. Las carpetas son permitidas, no obligatorias: no se crean directorios vacíos ni capas “por si acaso”.
 
 La guía ampliada está en [docs/architecture.md](docs/architecture.md).
+
+## Piezas opcionales y qué se puede eliminar
+
+La plantilla no obliga a conservar capas sin uso. Elimina una pieza sólo junto con su configuración, scripts, CI y documentación relacionados.
+
+| Pieza                                                         | Úsala cuando                                                               | Se puede eliminar si                                                                                                              |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `modules/*/application`, `domain`, `data`, `hooks`, `schemas` | La capacidad tiene esa responsabilidad real                                | Aún no existe esa responsabilidad; no crees directorios vacíos.                                                                   |
+| `src/server/`                                                 | Hay DB, autenticación, secretos o integración privada                      | La app no tiene infraestructura de servidor propia.                                                                               |
+| `tests/e2e/` + Playwright                                     | Hay flujos críticos de navegador, rutas, cookies o Server Components async | Es un prototipo sin flujo de navegador que proteger. Quita también `playwright.config.ts`, `test:e2e`, dependencia y pasos de CI. |
+| Vitest y pruebas junto a fuente                               | Quieres feedback rápido de lógica o componentes                            | Sólo en un experimento desechable. Quita `vitest.config.mts`, `vitest.setup.ts`, tests, scripts, dependencias y CI relacionados.  |
+| `.codex/skills/` y `AGENTS.md`                                | Colaboran agentes o quieres hacer cumplir la arquitectura                  | Trabaja un equipo que no usará agentes ni estas reglas; perderás sus límites documentados.                                        |
+
+No elimines `src/app/`, `src/shared/`, TypeScript, ESLint, Prettier ni la configuración de Node: son el núcleo mínimo de la plantilla.
 
 ## Inicio rápido
 
