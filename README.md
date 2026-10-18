@@ -6,6 +6,9 @@
 [![React](https://img.shields.io/badge/React-19-149eca?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-private-lightgrey)](#)
+[![CI](https://github.com/RogerG03/abc-next-js/actions/workflows/ci.yml/badge.svg)](https://github.com/RogerG03/abc-next-js/actions/workflows/ci.yml)
+
+**Documentación:** [rogerg03.github.io/abc-next-js](https://rogerg03.github.io/abc-next-js/) — auditoría, flujo shift-left y [comparativa antes/después](https://rogerg03.github.io/abc-next-js/comparison.html).
 
 ## ¿Qué resuelve?
 
@@ -31,11 +34,12 @@ Es una buena base para:
 | [Tailwind CSS v4](https://tailwindcss.com/)                            | Estilos con utilidades estáticas junto al componente.                                 |
 | [tailwind-variants](https://www.tailwind-variants.org/)                | Variantes semánticas y seguras para componentes reutilizables.                        |
 | [Knip](https://knip.dev/)                                              | Reporte de dependencias, exports y archivos potencialmente sin uso.                   |
+| [Lefthook](https://lefthook.dev/)                                      | Hooks de Git: formato, lint, secretos, commits y `pnpm check` antes de push.          |
 | GitHub Actions                                                         | Verificación automática en cada pull request y push a `main`.                         |
 
 ## Runtime de Node.js
 
-La plantilla usa **Node.js 24.20.0 LTS**. Es la línea estable fijada para desarrollo y CI; evita adoptar la rama "Current" antes de que madure. `.nvmrc`, `package.json` y GitHub Actions mantienen la misma versión.
+La plantilla usa **Node.js 24.20.0 LTS**. `devEngines.runtime` en `package.json` hace que pnpm descargue y use esa versión exacta, registrada en `pnpm-lock.yaml`; no hace falta `nvm use`. `.nvmrc` se conserva para editores y GitHub Actions.
 
 ## Arquitectura
 
@@ -83,23 +87,22 @@ La plantilla no obliga a conservar capas sin uso. Elimina una pieza sólo junto 
 | `src/server/`                                                 | Hay DB, autenticación, secretos o integración privada                      | La app no tiene infraestructura de servidor propia.                                                                               |
 | `tests/e2e/` + Playwright                                     | Hay flujos críticos de navegador, rutas, cookies o Server Components async | Es un prototipo sin flujo de navegador que proteger. Quita también `playwright.config.ts`, `test:e2e`, dependencia y pasos de CI. |
 | Vitest y pruebas junto a fuente                               | Quieres feedback rápido de lógica o componentes                            | Sólo en un experimento desechable. Quita `vitest.config.mts`, `vitest.setup.ts`, tests, scripts, dependencias y CI relacionados.  |
-| GitHub Actions                                                | Quieres validar cada push o pull request en remoto                         | El workflow está comentado por defecto; descomenta `.github/workflows/ci.yml` para activarlo.                                     |
-| Husky                                                         | Quieres bloquear commits locales que no pasen calidad                      | Instala Husky y activa `.husky/pre-commit.example`; no se instala ni ejecuta por defecto.                                         |
+| Job `Build + E2E` de CI                                       | Hay flujos de navegador que proteger                                       | Se elimina junto con Playwright.                                                                                                  |
+| GitHub Pages (`docs/`, `pages.yml`)                           | Quieres documentación publicada del producto                               | El producto documenta en otro sitio. Borra `.github/workflows/pages.yml` y `docs/_config.yml`.                                    |
 | `.codex/skills/` y `AGENTS.md`                                | Colaboran agentes o quieres hacer cumplir la arquitectura                  | Trabaja un equipo que no usará agentes ni estas reglas; perderás sus límites documentados.                                        |
 
-No elimines `src/app/`, `src/shared/`, TypeScript, Oxc, Tailwind ni la configuración de Node: son el núcleo mínimo de la plantilla.
+No elimines `src/app/`, `src/shared/`, TypeScript, Oxc, Tailwind, la configuración de Node, Lefthook ni el job `Calidad` de CI: son el núcleo mínimo de la plantilla y la base del flujo shift-left.
 
 ## Inicio rápido
 
 ```bash
 git clone https://github.com/RogerG03/abc-next-js.git
 cd abc-next-js
-nvm use
-pnpm install
+pnpm install   # descarga Node 24.20.0 si hace falta e instala los hooks de Git
 pnpm dev
 ```
 
-Instala pnpm 12.14.0 una vez con `npm install --global pnpm@12.14.0`. Si no usas `nvm`, instala Node.js 24 LTS y comprueba `node --version` antes de ejecutar `pnpm install`.
+Instala pnpm 12.14.0 una vez con `npm install --global pnpm@12.14.0` (o `corepack enable`). Opcional: instala [gitleaks](https://github.com/gitleaks/gitleaks#installing) para detectar secretos al hacer commit; CI lo ejecuta siempre.
 
 Abre [http://localhost:3000](http://localhost:3000).
 
@@ -112,9 +115,10 @@ Este repositorio no recibe aplicaciones reales: sirve para generar repositorios 
 | Comando             | Descripción                                                    |
 | ------------------- | -------------------------------------------------------------- |
 | `pnpm dev`          | Inicia el entorno local con Turbopack.                         |
+| `pnpm check`        | Barrera completa: formato, lint, tipos, tests y Knip.          |
 | `pnpm lint`         | Ejecuta Oxlint y falla ante advertencias.                      |
 | `pnpm lint:fix`     | Aplica correcciones seguras de Oxlint.                         |
-| `pnpm typecheck`    | Ejecuta TypeScript sin emitir archivos.                        |
+| `pnpm typecheck`    | Genera tipos de rutas (`next typegen`) y ejecuta TypeScript.   |
 | `pnpm test`         | Ejecuta pruebas unitarias y de componentes.                    |
 | `pnpm test:watch`   | Ejecuta las pruebas unitarias en modo watch.                   |
 | `pnpm test:e2e`     | Ejecuta el flujo E2E en Chromium.                              |
@@ -149,14 +153,18 @@ El código compartido se publica como paquetes versionados —por ejemplo `@orga
 
 ## Calidad continua
 
-GitHub Actions viene como receta **comentada** en `.github/workflows/ci.yml`; no se ejecuta hasta que la descomentes. Al activarla, ejecuta en cada pull request:
+La calidad es **shift-left**: cada control corre lo antes posible y CI repite exactamente el mismo comando que el developer ya ejecutó en local.
 
 ```text
-format:check → lint → typecheck → test → knip → test:e2e → build
+pnpm install  → Node 24.20.0 exacto, dependencias con ≥ 24 h publicadas, hooks instalados
+pre-commit    → Oxfmt + Oxlint sobre archivos staged, gitleaks
+commit-msg    → Conventional Commits
+pre-push      → pnpm check (format:check → lint → typecheck → test → knip)
+CI            → pnpm check · build + E2E · pnpm audit + gitleaks + dependency review
 ```
 
-Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; Playwright usa Chromium y arranca Next automáticamente.
+Oxlint también hace cumplir los límites de arquitectura: `shared` no puede importar `app`, `modules` ni `server`; un módulo no importa `app` ni rutas internas de otro módulo.
 
-Así, una modificación no llega a `main` sin cumplir las reglas básicas de estilo, tipado, pruebas y compilación.
+Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; en local Playwright arranca `next dev` y en CI el build de producción.
 
-Husky también es opcional. Para activarlo, instala `husky` con pnpm, ejecuta `pnpm exec husky init`, sustituye el hook generado por `.husky/pre-commit.example` y descomenta los checks que quieras aplicar antes de cada commit.
+El detalle de cada etapa, los ajustes de GitHub que hay que activar (branch protection, push protection, CodeQL, Pages) y cómo añadir un control nuevo están en [docs/shift-left.md](docs/shift-left.md). La auditoría que motivó estos cambios está en [docs/audit.md](docs/audit.md).

@@ -18,11 +18,12 @@ code-memory                 # decisiones, skills y notas compartidas; no código
 ## Primeros 15 minutos en el repositorio nuevo
 
 1. Cambia `name`, `version`, la descripción y los metadatos de Next por los del producto.
-2. Conserva `.nvmrc`, `packageManager`, `pnpm-lock.yaml`, `AGENTS.md` y `.codex/skills/`.
+2. Conserva `.nvmrc`, `packageManager`, `devEngines`, `pnpm-lock.yaml`, `lefthook.yml`, `.github/`, `AGENTS.md` y `.codex/skills/`.
 3. Borra o reemplaza la pantalla demostrativa `modules/home` junto con su prueba; no dejes una UI ficticia en producción.
 4. Crea sólo el primer módulo real en `src/modules/<modulo>/`.
 5. Configura `.env.example` con nombres de variables sin valores secretos. Los valores reales nunca se versionan.
-6. Ejecuta `pnpm install`, `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm knip` y `pnpm build`.
+6. Ejecuta `pnpm install` (instala los hooks), `pnpm check` y `pnpm build`.
+7. Activa en GitHub los ajustes de [Flujo shift-left](shift-left.md#configuración-en-github-una-vez-por-repositorio): branch protection con los checks de CI, push protection y CodeQL.
 
 No renombres `src/app`, `src/modules` o `src/shared` durante el arranque. Si el producto todavía sólo tiene una página, `modules/<modulo>/ui` es suficiente: no crees `domain`, `data`, `server` ni carpetas vacías hasta que exista esa responsabilidad.
 
@@ -76,13 +77,12 @@ No crees todavía paquetes de tokens, Storybook o un monorepo sólo por anticipa
 
 ## Opcionales de la plantilla
 
-| Pieza          | Actívala cuando                                         | Acción                                                               |
-| -------------- | ------------------------------------------------------- | -------------------------------------------------------------------- |
-| GitHub Actions | El proyecto necesite validación remota                  | Descomenta `.github/workflows/ci.yml`.                               |
-| Husky          | El equipo quiera bloquear commits locales inválidos     | Sigue los comentarios de `.husky/pre-commit.example`.                |
-| Playwright     | Existan flujos críticos de navegador                    | Conserva `tests/e2e`, la dependencia y el paso CI.                   |
-| Vitest         | Haya lógica o componentes que requieran feedback rápido | Conserva pruebas junto a la fuente.                                  |
-| Changesets     | Se publique una librería o paquete versionado           | Configúralo en el repositorio de librería, no por defecto en la app. |
+| Pieza        | Actívala cuando                                         | Acción                                                               |
+| ------------ | ------------------------------------------------------- | -------------------------------------------------------------------- |
+| GitHub Pages | Quieras publicar la documentación de `docs/`            | Settings → Pages → Source: GitHub Actions.                           |
+| Playwright   | Existan flujos críticos de navegador                    | Conserva `tests/e2e`, la dependencia y el paso CI.                   |
+| Vitest       | Haya lógica o componentes que requieran feedback rápido | Conserva pruebas junto a la fuente.                                  |
+| Changesets   | Se publique una librería o paquete versionado           | Configúralo en el repositorio de librería, no por defecto en la app. |
 
 ## Mantener la relación con ABC
 
@@ -95,12 +95,8 @@ No intentes fusionar `main` de la plantilla con una aplicación ni usarla como s
 Ejecuta lo que corresponda al cambio:
 
 ```bash
-pnpm format:check
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm knip
-pnpm test:e2e
+pnpm check      # format:check, lint, typecheck, test, knip; también corre en pre-push
+pnpm test:e2e   # si el cambio toca un flujo de navegador
 pnpm build
 ```
 
