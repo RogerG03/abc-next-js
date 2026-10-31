@@ -70,6 +70,8 @@ tests/
 
 Los directorios mostrados son **permitidos**, no obligatorios. No crees un directorio vacío, un `.gitkeep`, ni una capa preparada “para el futuro”. Créalo al mismo tiempo que su primer archivo real. Si una funcionalidad sólo tiene una pantalla y un formulario, basta con `modules/<modulo>/ui/` y los archivos necesarios.
 
+Las pruebas unitarias y de componente viven en una subcarpeta `tests/` de la carpeta propietaria del código: `src/modules/<modulo>/ui/tests/<archivo>.test.tsx`, `data/tests/<archivo>.test.ts` o `src/shared/lib/tests/<archivo>.test.ts`. No se mezclan con los archivos de producción ni se agrupan todos los módulos en una carpeta global. Crea cada `tests/` con su primera prueba. La preparación compartida vive en `tests/setup.ts`; integración y E2E conservan `tests/integration/` y `tests/e2e/` cuando existan.
+
 ## 3. Carpetas que no se crean en `src/`
 
 No crees carpetas raíz genéricas como estas:

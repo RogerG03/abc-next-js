@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { HomeScreen } from "./home-screen";
+import { HomeScreen } from "../home-screen";
 
 describe("HomeScreen", () => {
   it("explains the modular architecture", () => {

@@ -45,6 +45,6 @@ Keep variants semantic and finite. Callers should not supply raw Tailwind color 
 
 ## Validate the real behavior
 
-- Update or add a colocated React Testing Library test when behavior, variants, events, or accessibility changes.
+- Update or add a React Testing Library test in a `tests/` subfolder of the component’s owning folder when behavior, variants, events, or accessibility changes (for example, `ui/tests/project-form.test.tsx`). Never mix test files with production files.
 - Add an E2E test only for a browser flow, route, cookie, navigation, or server/client interaction; keep it in `tests/e2e`.
 - Run the narrow relevant tests, then `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` when the change warrants it. Run `pnpm knip` as a report and investigate its findings; it never authorizes blind deletion.

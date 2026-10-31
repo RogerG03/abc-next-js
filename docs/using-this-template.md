@@ -57,6 +57,12 @@ Las reglas viven dentro del repositorio derivado, así que funcionan con Codex, 
 
 No crees `src/components`, `src/services`, `src/utils`, `src/features`, `src/hooks` ni `src/types`. Si no hay dueño claro, mantenlo junto a quien lo usa hasta que el patrón se vuelva evidente.
 
+## Organización de pruebas
+
+Cada carpeta con pruebas unitarias o de componente debe guardarlas en su propia subcarpeta `tests/`. Por ejemplo, `src/modules/home/ui/home-screen.tsx` se prueba desde `src/modules/home/ui/tests/home-screen.test.tsx`. Conserva el nombre `<archivo>.test.ts(x)` y ajusta los imports relativos al mover la prueba. Crea la subcarpeta sólo cuando exista su primera prueba.
+
+Vitest descubre `src/**/tests/**/*.test.{ts,tsx}` y carga la preparación compartida desde `tests/setup.ts`. Los recorridos de navegador permanecen en `tests/e2e/`; no necesitan otra carpeta `tests` anidada.
+
 ## UI, Figma y Tailwind
 
 La llegada de un diseño de Figma no convierte automáticamente la app en una librería. Primero implementa el componente dentro del módulo que lo necesita. Usa Tailwind con clases completas y estáticas; no construyas nombres como `bg-${color}-500`.
@@ -86,7 +92,7 @@ No crees todavía paquetes de tokens, Storybook o un monorepo sólo por anticipa
 | ------------ | ------------------------------------------------------- | -------------------------------------------------------------------- |
 | GitHub Pages | Quieras publicar la documentación de `docs/`            | Settings → Pages → Source: GitHub Actions.                           |
 | Playwright   | Existan flujos críticos de navegador                    | Conserva `tests/e2e`, la dependencia y el paso CI.                   |
-| Vitest       | Haya lógica o componentes que requieran feedback rápido | Conserva pruebas junto a la fuente.                                  |
+| Vitest       | Haya lógica o componentes que requieran feedback rápido | Guarda las pruebas en `tests/` dentro de cada carpeta propietaria.   |
 | Changesets   | Se publique una librería o paquete versionado           | Configúralo en el repositorio de librería, no por defecto en la app. |
 
 ## Mantener la relación con ABC

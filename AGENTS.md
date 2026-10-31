@@ -12,7 +12,7 @@ Si la tarea consiste en iniciar un producto a partir de ABC o decidir una librer
 - No crees directorios vacíos ni capas “para el futuro”. Un directorio aparece junto con el primer archivo real que necesita esa responsabilidad.
 - No importes desde `src/server` en componentes cliente ni hagas imports internos de otro módulo.
 - No hagas refactors masivos sólo para uniformar nombres.
-- Coloca pruebas unitarias o de componente junto al archivo que cubren como `<archivo>.test.tsx`; reserva `tests/e2e` para recorridos de navegador.
+- Coloca pruebas unitarias o de componente en una subcarpeta `tests/` dentro de la carpeta del código que cubren, como `ui/tests/<archivo>.test.tsx` o `data/tests/<archivo>.test.ts`. Nunca mezcles archivos de prueba con archivos de producción. Crea `tests/` sólo cuando tenga pruebas. Conserva `tests/setup.ts` para la preparación compartida y `tests/e2e/` para recorridos de navegador.
 - Usa `pnpm`; no generes ni modifiques `package-lock.json`.
 - Usa Oxfmt y Oxlint mediante los scripts de `package.json`; conserva `pnpm typecheck` porque Oxc no sustituye la comprobación de tipos de TypeScript.
 - Usa `tailwind-variants` sólo para variantes semánticas y estables. No construyas clases Tailwind dinámicamente ni agregues `tailwind-merge`.

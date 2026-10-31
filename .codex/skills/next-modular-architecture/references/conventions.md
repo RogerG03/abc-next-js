@@ -14,7 +14,7 @@
 | Props / input / DTO / esquema     | Sufijos `Props`, `Input`, `Dto`, `Schema` | `ProjectFormProps`, `CreateProjectInput` |
 | Constante global inmutable        | `UPPER_SNAKE_CASE`                        | `MAX_PROJECT_NAME_LENGTH`                |
 
-No uses `components`, `services`, `utils` o `types` globales para esconder código de un módulo. Los tests usan `archivo.test.ts`.
+No uses `components`, `services`, `utils` o `types` globales para esconder código de un módulo. Los tests usan `tests/archivo.test.ts` o `tests/archivo.test.tsx` dentro de la carpeta del código que cubren; por ejemplo, `ui/tests/project-form.test.tsx`. No los mezcles con archivos de producción. El setup compartido vive en `tests/setup.ts` y los recorridos de navegador en `tests/e2e/`.
 
 ## Assets y UI
 

@@ -53,7 +53,7 @@ flowchart TB
   Server --> Domain
 
   Change[Cambio] --> Checks[format + lint + typecheck]
-  Checks --> Unit[Vitest\npruebas junto al código]
+  Checks --> Unit[Vitest\npruebas en tests/]
   Unit --> E2E[Playwright\ntests/e2e]
   E2E --> Build[Build de producción]
 ```
@@ -86,7 +86,7 @@ La plantilla no obliga a conservar capas sin uso. Elimina una pieza sólo junto 
 | `modules/*/application`, `domain`, `data`, `hooks`, `schemas` | La capacidad tiene esa responsabilidad real                                | Aún no existe esa responsabilidad; no crees directorios vacíos.                                                                   |
 | `src/server/`                                                 | Hay DB, autenticación, secretos o integración privada                      | La app no tiene infraestructura de servidor propia.                                                                               |
 | `tests/e2e/` + Playwright                                     | Hay flujos críticos de navegador, rutas, cookies o Server Components async | Es un prototipo sin flujo de navegador que proteger. Quita también `playwright.config.ts`, `test:e2e`, dependencia y pasos de CI. |
-| Vitest y pruebas junto a fuente                               | Quieres feedback rápido de lógica o componentes                            | Sólo en un experimento desechable. Quita `vitest.config.mts`, `vitest.setup.ts`, tests, scripts, dependencias y CI relacionados.  |
+| Vitest y pruebas en subcarpetas `tests/`                      | Quieres feedback rápido de lógica o componentes                            | Sólo en un experimento desechable. Quita `vitest.config.mts`, `tests/setup.ts`, tests, scripts, dependencias y CI relacionados.   |
 | Job `Build + E2E` de CI                                       | Hay flujos de navegador que proteger                                       | Se elimina junto con Playwright.                                                                                                  |
 | GitHub Pages (`docs/`, `pages.yml`)                           | Quieres documentación publicada del producto                               | El producto documenta en otro sitio. Borra `.github/workflows/pages.yml` y `docs/_config.yml`.                                    |
 | `.codex/skills/` y `AGENTS.md`                                | Colaboran agentes o quieres hacer cumplir la arquitectura                  | Trabaja un equipo que no usará agentes ni estas reglas; perderás sus límites documentados.                                        |
@@ -165,6 +165,6 @@ CI            → pnpm check · build + E2E · pnpm audit + gitleaks + dependenc
 
 Oxlint también hace cumplir los límites de arquitectura: `shared` no puede importar `app`, `modules` ni `server`; un módulo no importa `app` ni rutas internas de otro módulo.
 
-Las pruebas unitarias viven junto al archivo que cubren. Los recorridos E2E viven en `tests/e2e/`; en local Playwright arranca `next dev` y en CI el build de producción.
+Las pruebas unitarias y de componente viven en una subcarpeta `tests/` de la carpeta del código que cubren, por ejemplo `src/modules/home/ui/tests/home-screen.test.tsx`. La preparación compartida vive en `tests/setup.ts`. Los recorridos E2E viven en `tests/e2e/`; en local Playwright arranca `next dev` y en CI el build de producción.
 
 El detalle de cada etapa, los ajustes de GitHub que hay que activar (branch protection, push protection, CodeQL, Pages) y cómo añadir un control nuevo están en [docs/shift-left.md](docs/shift-left.md). La auditoría que motivó estos cambios está en [docs/audit.md](docs/audit.md).
