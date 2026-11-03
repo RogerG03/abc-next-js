@@ -31,3 +31,15 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Configuración de UI con Redux
+
+- Usa Redux Toolkit y React Redux para estado de interfaz compartido por una vista: pestañas, filtros, modos y apertura de modales. Ubica slice, fábrica y pruebas en el módulo dueño (UI y su subcarpeta tests), sin `src/store` global.
+- Crea el store por instancia en un Provider cliente, nunca como singleton de módulo compartido por peticiones. Conserva el Provider entre pestañas de esa vista; reinícialo al cambiar de entidad o salir. No añadas persistencia sin petición.
+- Mantén inputs/borradores locales cuando solo pertenecen al formulario. No almacenes DOM, promesas ni callbacks en Redux. El estado debe ser serializable.
+- Redux configura la interfaz; el backend debe resolver y validar autenticación, permisos y reglas de negocio. No implementar autorización con banderas cliente.
+- La adaptación futura de Permix y permisos en BD está documentada en `docs/permix-adaptation.md`; no crear su estructura hasta que un producto la necesite.
+
+## Feedback al guardar
+
+En formularios de producto, no uses un botón de guardado bloqueado como única explicación de requisitos pendientes. Permite solicitar el guardado y muestra feedback específico que lleve el foco al campo faltante, manteniendo la validación del formulario y del servidor. Conserva el bloqueo necesario durante un envío para evitar duplicados.

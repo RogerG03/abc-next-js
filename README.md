@@ -168,3 +168,19 @@ Oxlint también hace cumplir los límites de arquitectura: `shared` no puede imp
 Las pruebas unitarias y de componente viven en una subcarpeta `tests/` de la carpeta del código que cubren, por ejemplo `src/modules/home/ui/tests/home-screen.test.tsx`. La preparación compartida vive en `tests/setup.ts`. Los recorridos E2E viven en `tests/e2e/`; en local Playwright arranca `next dev` y en CI el build de producción.
 
 El detalle de cada etapa, los ajustes de GitHub que hay que activar (branch protection, push protection, CodeQL, Pages) y cómo añadir un control nuevo están en [docs/shift-left.md](docs/shift-left.md). La auditoría que motivó estos cambios está en [docs/audit.md](docs/audit.md).
+
+## Estado de interfaz por vista
+
+Usar **Redux Toolkit y React Redux** para la configuración compartida de una vista: pestañas, filtros, modos y apertura de modales. Los slices y la fábrica del store pertenecen al módulo dueño, junto a su UI; no crear `src/store` ni un store singleton exportado.
+
+El Provider cliente crea una instancia por vista con inicialización diferida. Mantenerlo montado al cambiar entre sus pestañas y reiniciarlo al cambiar de entidad (por ejemplo, expediente) o salir de la vista. No persistir en localStorage por defecto. Nunca compartir un store entre peticiones de Next.js.
+
+Los inputs y borradores de un formulario pueden permanecer locales. Referencias DOM, callbacks, promesas y funciones de confirmación quedan fuera de Redux; su estado debe ser serializable. La autenticación, autorización, permisos y validación de negocio corresponden al backend: ocultar un botón o guardar una bandera en Redux no concede permisos.
+
+Referencia: [guía oficial de Redux para Next.js](https://redux.js.org/usage/nextjs). Crear únicamente los slices que necesita una vista real, sin stores vacíos para futuras funciones.
+
+Para planear autorización futura con Permix y permisos persistidos, consulta [la guía de adaptación](docs/permix-adaptation.md); no está implementada en la plantilla.
+
+## Feedback al guardar
+
+En formularios de producto, no uses un botón de guardado bloqueado como única explicación de requisitos pendientes. Permite solicitar el guardado y muestra feedback específico que lleve el foco al campo faltante, manteniendo la validación del formulario y del servidor. Conserva el bloqueo necesario durante un envío para evitar duplicados.
