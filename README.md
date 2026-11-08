@@ -186,3 +186,5 @@ Para planear autorización futura con Permix y permisos persistidos, consulta [l
 En formularios de producto, no uses un botón de guardado bloqueado como única explicación de requisitos pendientes. Permite solicitar el guardado y muestra feedback específico que lleve el foco al campo faltante, manteniendo la validación del formulario y del servidor. Conserva el bloqueo necesario durante un envío para evitar duplicados.
 
 Código técnico y TSDoc en inglés; etiquetas de interfaz separadas en español. Las reglas de documentación de APIs públicas y contratos se mantienen en AGENTS.md y las skills locales de arquitectura y componentes.
+
+No se permiten ternarios anidados: Oxlint aplica `no-nested-ternary` como error.

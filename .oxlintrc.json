@@ -8,9 +8,12 @@
   "rules": {
     "import/no-unassigned-import": [
       "error",
-      { "allow": ["./globals.css", "@testing-library/jest-dom/vitest"] }
+      {
+        "allow": ["./globals.css", "@testing-library/jest-dom/vitest"]
+      }
     ],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-nested-ternary": "error"
   },
   "ignorePatterns": [".next", "coverage", "playwright-report", "test-results"],
   "overrides": [
@@ -23,7 +26,7 @@
             "patterns": [
               {
                 "group": ["@/app/**", "@/modules/**", "@/server/**"],
-                "message": "shared/ no conoce rutas, módulos ni infraestructura."
+                "message": "shared/ no conoce rutas, m\u00f3dulos ni infraestructura."
               }
             ]
           }
@@ -39,11 +42,11 @@
             "patterns": [
               {
                 "group": ["@/app/**"],
-                "message": "Un módulo no importa rutas."
+                "message": "Un m\u00f3dulo no importa rutas."
               },
               {
                 "group": ["@/modules/*/**"],
-                "message": "Usa imports relativos dentro del módulo y @/modules/<modulo> (index.ts) entre módulos."
+                "message": "Usa imports relativos dentro del m\u00f3dulo y @/modules/<modulo> (index.ts) entre m\u00f3dulos."
               }
             ]
           }
