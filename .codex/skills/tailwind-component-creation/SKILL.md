@@ -48,3 +48,7 @@ Keep variants semantic and finite. Callers should not supply raw Tailwind color 
 - Update or add a React Testing Library test in a `tests/` subfolder of the component’s owning folder when behavior, variants, events, or accessibility changes (for example, `ui/tests/project-form.test.tsx`). Never mix test files with production files.
 - Add an E2E test only for a browser flow, route, cookie, navigation, or server/client interaction; keep it in `tests/e2e`.
 - Run the narrow relevant tests, then `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` when the change warrants it. Run `pnpm knip` as a report and investigate its findings; it never authorizes blind deletion.
+
+## Code language and TSDoc
+
+Use consistent English for technical identifiers, paths, API fields and internal codes; keep localized UI labels and historical/user data separate. Respect an explicit project language decision and upstream names. For TypeScript public APIs, contracts and non-trivial business rules added or changed, write English TSDoc (`/** ... */`) explaining purpose, invariants, effects, failure behavior and actual limits. Use `@param name - description`, `@returns`, `@remarks`, `@throws` and `{@link ...}` where useful; do not duplicate TypeScript types, invent guarantees, document every local variable, or add empty summaries. Keep comments beside their symbols and update them with behavior. Documentation alone does not justify adding generators or dependencies.

@@ -43,3 +43,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Feedback al guardar
 
 En formularios de producto, no uses un botón de guardado bloqueado como única explicación de requisitos pendientes. Permite solicitar el guardado y muestra feedback específico que lleve el foco al campo faltante, manteniendo la validación del formulario y del servidor. Conserva el bloqueo necesario durante un envío para evitar duplicados.
+
+## Idioma técnico y TSDoc
+
+- Usa inglés consistente para carpetas, archivos, variables, funciones, tipos, propiedades y códigos internos. Separa códigos de etiquetas traducidas; el texto visible y los datos clínicos de la interfaz pueden conservar español. No traduzcas nombres oficiales de dependencias ni datos históricos para cambiar su significado.
+- Documenta en inglés mediante TSDoc (`/** ... */`) las APIs públicas, contratos y reglas de negocio no triviales que agregues o modifiques. Explica propósito, invariantes, efectos, errores y límites reales; usa `@param name - description`, `@returns`, `@remarks`, `@throws` o `{@link ...}` cuando aporten información. No repitas los tipos de TypeScript ni inventes garantías.
+- Mantén la documentación junto al símbolo y actualízala al cambiar el comportamiento. No agregues comentarios vacíos que solo repitan el nombre ni documentes cada variable local. Un cambio solo de documentación no autoriza dependencias, generadores o refactors ajenos.

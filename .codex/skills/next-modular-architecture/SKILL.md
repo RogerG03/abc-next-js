@@ -182,3 +182,7 @@ El repositorio orquestador no contiene ni construye las fuentes de las apps. Cad
 - ¿Se ejecutaron format, lint, typecheck y las pruebas/build relevantes, o se explicó qué impidió hacerlo?
 
 La referencia en `references/conventions.md` contiene ejemplos cortos; este archivo es la fuente de verdad para las decisiones de estructura.
+
+## Code language and TSDoc
+
+Use consistent English for technical identifiers, paths, API fields and internal codes; keep localized UI labels and historical/user data separate. Respect an explicit project language decision and upstream names. For TypeScript public APIs, contracts and non-trivial business rules added or changed, write English TSDoc (`/** ... */`) explaining purpose, invariants, effects, failure behavior and actual limits. Use `@param name - description`, `@returns`, `@remarks`, `@throws` and `{@link ...}` where useful; do not duplicate TypeScript types, invent guarantees, document every local variable, or add empty summaries. Keep comments beside their symbols and update them with behavior. Documentation alone does not justify adding generators or dependencies.
